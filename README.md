@@ -89,9 +89,8 @@ Ocean Clean Up is a game where the player has to collect the plastic in the ocea
 - move 
 
 
-
-
 ## sketches 
 <hr>
+
 ![sketch](./images/sketch.jpeg)
 
