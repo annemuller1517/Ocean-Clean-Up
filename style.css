@@ -9,7 +9,7 @@
     padding: 200px;
 }
 
-button {
+.buttons {
     background-color: green;
     color: white;
     border: 1px solid yellow;
@@ -24,4 +24,9 @@ button {
 
 }
 
-button:hover {background-color: #0b330c}
+.buttons:hover {background-color: #0b330c}
+
+
+.highScore {
+    list-style: none;
+}

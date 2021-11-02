@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flappy Bird</title>
+    <title>Clean-up</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,15 +13,20 @@
         <p>
             welcome to the game. the goal of the game is to collect all the plastic and make the fish happy agian.!
         </p>
-        <button id="start">START</button>
+        <button id="start" class="buttons">START</button>
     </section>
     <section class="wonPage">
-        <h1>YOU WON!!!</h1>
-        <p>you are super good maybe you should try a level higher!
+        <h1>Game Over</h1>
+        <p>Click on the restart button to improve your highscore!
         </p>
-        <button id="restart">RESTART</button>
+        <ul class="highScore">
+            <h1>Your best score: </h1><li id="firstPlace">0</li>
+            <h1>Your second best score:</h1><li id="secondPlace">0</li>
+            <h1>Your third best score:</h1> <li id="thirdPlace">0</li>
+        </ul>
+        <button id="restart" class="buttons">RESTART</button>
     </section>
-    <canvas id="myCanvas" width="1200" height="700"></canvas>
+    <canvas id="myCanvas" width=1200 height=700></canvas>
     <script src="index.js"></script>
 </body>
 </html>
