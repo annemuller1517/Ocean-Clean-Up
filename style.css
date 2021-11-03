@@ -4,14 +4,17 @@
 
 
 
-.startPage, .wonPage{
-    background-image: url(./images/ocean.jpg);
+.startPage, .wonPage, .instructionPage{
+    background-image: url(./images/oceanBackground.png);
     background-repeat: none;
     background-size: cover;
-    height: 320px;
+    height: 600px;
     color: white;
     text-align: center;
-    padding: 200px;
+    padding: 20px;
+    margin: 40px;
+    box-shadow: 2px 2px 20px black;
+
 }
 
 .buttons {
@@ -19,17 +22,21 @@
     color: white;
     border: 1px solid yellow;
     height: 50px;
-    width: 100px;
+    width: 150px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     cursor: pointer;
     text-decoration: none;
     outline: none;
     border: none;
     border-radius: 15px;
+    font-size: 20px;
 
 }
 
-.buttons:hover {background-color: #0b330c}
+.buttons:hover {
+    transform: translateY(5px);
+    transition: 0.2s;
+}
 
 
 .highScore {
@@ -49,4 +56,14 @@ canvas {
     margin:auto;
     border: 2px solid #00000080;
     box-shadow: 2px 2px 20px black;
+  }
+
+
+  .startPage p {
+      font-size: 40px;
+      
+  }
+
+  .startPage h1 {
+      font-size: 100px;
   }

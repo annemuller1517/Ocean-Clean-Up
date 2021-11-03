@@ -7,6 +7,9 @@ let ctx = canvas.getContext('2d');
 
 let startBtn = document.querySelector('#start')
 let restartBtn = document.querySelector('#restart')
+let instrucionsBtn = document.querySelector('#instructions')
+let startNow = document.getElementById("startNow")
+let instructions = document.querySelector(".instructionPage")
 let intro = document.querySelector(".startPage")
 let won = document.querySelector(".wonPage")
 let first = document.getElementById('firstPlace')
@@ -20,17 +23,19 @@ bg.src = "./images/oceanBackground.png";
 let gameOverBg = new Image();
 gameOverBg.src = "./Images/ocean.jpg"
 
-// let startBg = new image ();
-// startBg.src = "./Images/ad0933eb-0345-46b9-ab12-619b43994df4.png"
-
 let fish = new Image();
 fish.src = './images/fish.png';
 
 let bin = new Image();
 bin.src = './images/scubaguy.png'
 
+
+let scubaLeft = new Image();
+scubaLeft.src = "./Images/scubaleft.png"
+
+
 let plastic = new Image();
-plastic.src = './images/plastic.png'
+plastic.src = './images/plasticBottle.png'
 
 
 let backgroundMusic = new Audio('./sounds/disney_instrumental_neverland_orchestra_under_the_sea_TZsy_XIByoK-gucZwiP_.mp3')
@@ -82,6 +87,12 @@ function startScreen() {
 
 
 
+function showInstructions() {
+    intro.style.display = "none" 
+    instructions.style.display = "block"
+}
+
+
 function calculateHighscores() {
     if (score > first.innerText) {
         second.innerText = first.innerText
@@ -123,15 +134,24 @@ function draw(){
     intro.style.display = "none";
     canvas.style.display = 'block';
     won.style.display = "none";
-    // ctx.clearRect(0, 0, canvas.width, canvas.length)
+    instructions.style.display = "none"
 
     // background image 
     ctx.drawImage(bg, 0,0, 1500, 800)
     
     // bin image 
-    ctx.drawImage(bin, binX, binY, bin.width, bin.height)
+    if (isRight == true || isLeft == false) {
+        ctx.drawImage(bin, binX, binY, bin.width, bin.height)
+    }
 
 
+    else if (isLeft == true && isRight == false){
+        ctx.drawImage(scubaLeft, binX, binY, bin.width, bin.height)
+    }
+
+
+
+    
     ctx.font = '30px Verdana'
     ctx.fillStyle = 'white'
     ctx.fillText(`Score: ${score} `, 10, 40)
@@ -231,6 +251,7 @@ function draw(){
 window.addEventListener('load', () => {
     canvas.style.display = 'none'
     won.style.display = 'none'
+    instructions.style.display = "none"
 
     document.addEventListener('keydown', (event) => {
         if (event.key == 'ArrowLeft' ) {
@@ -275,6 +296,16 @@ window.addEventListener('load', () => {
     })
     
     restartBtn.addEventListener('click', () => {
+        backgroundMusic.play()
+        draw()
+        plasticArray()
+        fishArray()
+    })
+
+    instrucionsBtn.addEventListener('click', () => {
+        showInstructions()
+    })
+    startNow.addEventListener('click', () => {
         backgroundMusic.play()
         draw()
         plasticArray()
