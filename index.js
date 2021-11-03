@@ -32,12 +32,18 @@ bin.src = './images/scubaguy.png'
 let plastic = new Image();
 plastic.src = './images/plastic.png'
 
+
+let backgroundMusic = new Audio('./sounds/disney_instrumental_neverland_orchestra_under_the_sea_TZsy_XIByoK-gucZwiP_.mp3')
+let plasticSound = new Audio("./sounds/Plastic-sound.mp3")
+let fishSound = new Audio("./sounds/mixkit-ow-exclamation-of-pain-2204.wav")
+
+
 let intervalId = 0;
 let isGameOver = false;
 //make global variable so you can change it at some point. 
 let fishX = 0, fishY = 0;
 let binX = 60, binY = 60;
-bin.width = 50, bin.height = 50;
+bin.width = 80, bin.height = 80;
 plastic.width = 60, plastic.height = 60;
 let plasticY = 0, plasticX = 0;
 let isRight = false, isLeft = false, isUp = false, isDown = false;
@@ -47,19 +53,31 @@ let fishArr = []
 let plasticArr = []
 
 let fishSpeed = 2
+let lives = 3
 
 
 
 function fishArray() {
-    for(i=0; i<16; i++) {
-        fishArr.push({x: Math.random()*(canvas.width) + 40, y: Math.random()*(canvas.height) - 40})
+    let extra = 0
+    for(i=0; i<20; i++) {
+        fishArr.push({x: Math.random()*(canvas.width) + 100 + extra, y: Math.random()*(canvas.height) - 40})
+        extra += 50
     }
 }
 
 function plasticArray() {
     for(i=0; i<16; i++) {
-        plasticArr.push({x: Math.random()*(canvas.width) + plastic.height, y: Math.random()*(canvas.height) - plastic.width})
+        plasticArr.push({x: Math.random()*(canvas.width) + 40 + plastic.height , y: Math.random()*(canvas.height) - plastic.width})
+        
     }
+}
+
+
+function startScreen() {
+    canvas.style.display = "none"
+    startBtn.style.display = "block"
+    backgroundMusic.play()
+    intro.style.display = "block"   
 }
 
 
@@ -79,8 +97,8 @@ function calculateHighscores() {
 }
 
 function showGameOver() {
-    // ctx.clearRect(0, 0, canvas.width, canvas.height)
-    // ctx.drawImage(gameOverBg, 0,0,1500, 800)
+    ctx.drawImage(bg, 0,0, 1500, 800)
+    backgroundMusic.pause()
     canvas.style.display = 'none';
     restartBtn.style.display = 'block';
     won.style.display = 'block';
@@ -93,6 +111,8 @@ function showGameOver() {
     fishArr = []
     score = 0
     fishSpeed = 2
+    lives = 3
+
 }
 
 
@@ -112,9 +132,13 @@ function draw(){
     ctx.drawImage(bin, binX, binY, bin.width, bin.height)
 
 
-    ctx.font = '24px Verdana'
+    ctx.font = '30px Verdana'
     ctx.fillStyle = 'white'
-    ctx.fillText(`Score: ${score} `, 10, 20)
+    ctx.fillText(`Score: ${score} `, 10, 40)
+
+    ctx.font = '30px Verdana'
+    ctx.fillStyle = 'white'
+    ctx.fillText(`Lives: ${lives} `, canvas.width -130, 40)
 
 
     // fish images 
@@ -130,7 +154,14 @@ function draw(){
         // collision fish 
         if (binX + 50 >= fishArr[i].x && binX <= fishArr[i].x + 40){
             if (binY + 50 >= fishArr[i].y && binY <= fishArr[i].y + 40){
-                isGameOver = true
+                fishSound.play()
+                fishArr.splice(i, 1) 
+                lives--
+                
+                // game is over after 3 lives 
+                if (lives < 1) {
+                    isGameOver = true
+                }
         }
     }
 
@@ -162,16 +193,17 @@ function draw(){
         if (plasticArr[j].x < binX + bin.width && plasticArr[j].x + plastic.width > binX
             && plasticArr[j].y < binY + bin.height && plasticArr[j].y + plastic.height > binY) {
             score++
+            plasticSound.play()
             
             // increase speed of fish 
             if (score > 2) {
-                fishSpeed = fishSpeed + 1
+                fishSpeed = fishSpeed + 0.5
             }
             else if (score > 6) {
-                fishSpeed = fishSpeed + 2
+                fishSpeed = fishSpeed + 1
             }
             else if (score > 10) {
-                fishSpeed = fishSpeed + 4
+                fishSpeed = fishSpeed + 3
             }
 
             // mutates the original array. 
@@ -197,11 +229,8 @@ function draw(){
 
 
 window.addEventListener('load', () => {
-    // ctx.drawImage(startBg, 0, 0, 1500, 800)
     canvas.style.display = 'none'
     won.style.display = 'none'
-    // startBtn.style.display = "block"
-    
 
     document.addEventListener('keydown', (event) => {
         if (event.key == 'ArrowLeft' ) {
@@ -239,12 +268,14 @@ window.addEventListener('load', () => {
 
 
     startBtn.addEventListener('click', () => {
+        backgroundMusic.play()
         draw()
         plasticArray()
         fishArray()
     })
     
     restartBtn.addEventListener('click', () => {
+        backgroundMusic.play()
         draw()
         plasticArray()
         fishArray()
