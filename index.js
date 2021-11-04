@@ -1,10 +1,6 @@
 let canvas = document.getElementById('myCanvas');
 let ctx = canvas.getContext('2d');
 
-
-// canvas.width = max.width
-// canvas.heigth = max.height
-
 let startBtn = document.querySelector('#start')
 let restartBtn = document.querySelector('#restart')
 let instrucionsBtn = document.querySelector('#instructions')
@@ -52,30 +48,26 @@ gameoverSound.volume = .2;
 fishSound.volume = .2
 plasticSound.volume = .2
 
-
-let intervalId = 0;
-let isGameOver = false;
-
 //make global variable so you can change it at some point. 
 let fishX = 0, fishY = 0;
-let scubaX = 60, scubaY = 60;
-scuba.width = 80, scuba.height = 80;
+let scubaX = 120, scubaY = 120;
+scuba.width = 120, scuba.height = 120;
 plastic.width = 60, plastic.height = 60;
 let plasticY = 0, plasticX = 0;
 let isRight = false, isLeft = false, isUp = false, isDown = false;
-
+let intervalId = 0;
+let isGameOver = false;
 let score = 0;
 let fishArr = []
 let plasticArr = []
-
 let fishSpeed = 2
 let lives = 3
-
 let energyX = 500, energyY = 400;
 let speedScuba = 1
 
 
 function fishArray() {
+    // create array random coordinates for the fish
     let extra = 0
     for(i=0; i<20; i++) {
         fishArr.push({x: Math.random()*(canvas.width) + 100 + extra, y: Math.random()*(canvas.height) - 40})
@@ -84,6 +76,7 @@ function fishArray() {
 }
 
 function plasticArray() {
+    // create array with random coordinates for the plastic bottles 
     let extra = 0
     for(i=0; i<20; i++) {
         plasticArr.push({x: Math.random()*(canvas.width) + 40 + extra+ plastic.height, y: Math.random()*(canvas.height) - plastic.width})
@@ -93,6 +86,7 @@ function plasticArray() {
 
 
 function startScreen() {
+    // set startscreen
     canvas.style.display = "none"
     startBtn.style.display = "block"
     backgroundMusic.play()
@@ -102,12 +96,14 @@ function startScreen() {
 
 
 function showInstructions() {
+    // set intruction page
     intro.style.display = "none" 
     instructions.style.display = "block"
 }
 
 
 function calculateHighscores() {
+    // update scores
     if (score > first.innerText) {  
         second.innerText = first.innerText
         first.innerText = score
@@ -122,7 +118,7 @@ function calculateHighscores() {
 }
 
 function showGameOver() {
-    ctx.drawImage(bg, 0,0, 1500, 800)
+    // show gameover screen and calcutlate scores
     gameoverSound.play()
     backgroundMusic.pause()
     canvas.style.display = 'none';
@@ -147,6 +143,7 @@ function showGameOver() {
 }
 
 function scubaMove() {
+
      // move the scubaguy
     if (isRight && scubaX + scuba.width < canvas.width) {
         if (speedScuba == 0) {
@@ -206,12 +203,9 @@ function draw(){
     if (isRight == true || isLeft == false) {
         ctx.drawImage(scuba, scubaX, scubaY, scuba.width, scuba.height)
     }
-
-
     else if (isLeft == true){
         ctx.drawImage(scubaLeft, scubaX, scubaY, scuba.width, scuba.height)
     }
-
     
     ctx.font = '30px Verdana'
     ctx.fillStyle = 'white'
@@ -221,7 +215,7 @@ function draw(){
     ctx.fillStyle = 'white'
     ctx.fillText(`Lives: ${lives} `, canvas.width -130, 40)
 
-    // fish images 
+    // draw fish images 
     for (i=0; i<fishArr.length; i++) {
         ctx.drawImage(fish, fishArr[i].x, fishArr[i].y, 40, 40)
         fishArr[i].x = fishArr[i].x - fishSpeed
