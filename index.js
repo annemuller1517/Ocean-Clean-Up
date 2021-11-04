@@ -21,17 +21,20 @@ let bg = new Image();
 bg.src = "./images/oceanBackground.png";
 
 let gameOverBg = new Image();
-gameOverBg.src = "./Images/ocean.jpg"
+gameOverBg.src = "./images/ocean.jpg"
 
 let fish = new Image();
 fish.src = './images/fish.png';
 
-let bin = new Image();
-bin.src = './images/scubaguy.png'
+let scuba = new Image();
+scuba.src = './images/scubaguy.png'
+
+let energy = new Image();
+energy.src = "./images/bar.png"
 
 
 let scubaLeft = new Image();
-scubaLeft.src = "./Images/scubaLeft.png"
+scubaLeft.src = "./images/scubaLeft.png"
 
 
 let plastic = new Image();
@@ -41,14 +44,22 @@ plastic.src = './images/plasticBottle.png'
 let backgroundMusic = new Audio('./sounds/disney_instrumental_neverland_orchestra_under_the_sea_TZsy_XIByoK-gucZwiP_.mp3')
 let plasticSound = new Audio("./sounds/Plastic-sound.mp3")
 let fishSound = new Audio("./sounds/mixkit-ow-exclamation-of-pain-2204.wav")
+let gameoverSound = new Audio("./sounds/sfx-defeat2.mp3")
+
+// set volume lower 
+backgroundMusic.volume = .1;
+gameoverSound.volume = .2;
+fishSound.volume = .2
+plasticSound.volume = .2
 
 
 let intervalId = 0;
 let isGameOver = false;
+
 //make global variable so you can change it at some point. 
 let fishX = 0, fishY = 0;
-let binX = 60, binY = 60;
-bin.width = 80, bin.height = 80;
+let scubaX = 60, scubaY = 60;
+scuba.width = 80, scuba.height = 80;
 plastic.width = 60, plastic.height = 60;
 let plasticY = 0, plasticX = 0;
 let isRight = false, isLeft = false, isUp = false, isDown = false;
@@ -60,6 +71,8 @@ let plasticArr = []
 let fishSpeed = 2
 let lives = 3
 
+let energyX = 500, energyY = 400;
+let speedScuba = 1
 
 
 function fishArray() {
@@ -71,9 +84,10 @@ function fishArray() {
 }
 
 function plasticArray() {
-    for(i=0; i<16; i++) {
-        plasticArr.push({x: Math.random()*(canvas.width) + 40 + plastic.height , y: Math.random()*(canvas.height) - plastic.width})
-        
+    let extra = 0
+    for(i=0; i<20; i++) {
+        plasticArr.push({x: Math.random()*(canvas.width) + 40 + extra+ plastic.height, y: Math.random()*(canvas.height) - plastic.width})
+        extra += 50
     }
 }
 
@@ -94,7 +108,7 @@ function showInstructions() {
 
 
 function calculateHighscores() {
-    if (score > first.innerText) {
+    if (score > first.innerText) {  
         second.innerText = first.innerText
         first.innerText = score
     }
@@ -109,24 +123,68 @@ function calculateHighscores() {
 
 function showGameOver() {
     ctx.drawImage(bg, 0,0, 1500, 800)
+    gameoverSound.play()
     backgroundMusic.pause()
     canvas.style.display = 'none';
     restartBtn.style.display = 'block';
     won.style.display = 'block';
     startBtn.style.display = 'none';
     calculateHighscores()
-    binY = 40;
-    binX = 40;
+
+    // reset all the variables
+    scubaY = 40;
+    scubaX = 40;
     isGameOver = false;
     plasticArr = []
     fishArr = []
     score = 0
     fishSpeed = 2
     lives = 3
+    speedScuba = 1
+    energy.src = "./images/bar.png"
+}
 
+function scubaMove() {
+     // move the scubaguy
+    if (isRight && scubaX + scuba.width < canvas.width) {
+        if (speedScuba == 0) {
+            scubaX = scubaX + 7
+        }
+        scubaX = scubaX + 5
+    }
+
+    if (isLeft && scubaX > 0) {
+        if (speedScuba == 0) {
+            scubaX = scubaX - 7
+        }
+        scubaX = scubaX - 5
+    }
+
+    if (isDown && scubaY + scuba.width < canvas.height) {
+        if (speedScuba == 0) {
+            scubaY = scubaY + 7
+        }
+        
+        scubaY = scubaY + 5
+    }
+    if (isUp && scubaY > 0) {
+        if (speedScuba == 0) {
+            scubaY = scubaY - 7
+        }
+        scubaY = scubaY - 5
+    }
 }
 
 
+
+function energyBar() {
+    //draw enegery bar
+    if (energyX < scubaX + scuba.width && energyX + 40 > scubaX
+    && energyY < scubaY + scuba.height && energyY + 40 > scubaY) {
+        speedScuba = 0
+        energy.src = ""
+    }
+}
 
 // basic animation template
 function draw(){
@@ -139,17 +197,15 @@ function draw(){
     // background image 
     ctx.drawImage(bg, 0,0, 1500, 800)
     
-    // bin image 
+    // scuba image 
     if (isRight == true || isLeft == false) {
-        ctx.drawImage(bin, binX, binY, bin.width, bin.height)
+        ctx.drawImage(scuba, scubaX, scubaY, scuba.width, scuba.height)
     }
 
 
-    else if (isLeft == true && isRight == false){
-        ctx.drawImage(scubaLeft, binX, binY, bin.width, bin.height)
+    else if (isLeft == true){
+        ctx.drawImage(scubaLeft, scubaX, scubaY, scuba.width, scuba.height)
     }
-    // morgen kijken 
-
 
     
     ctx.font = '30px Verdana'
@@ -159,7 +215,6 @@ function draw(){
     ctx.font = '30px Verdana'
     ctx.fillStyle = 'white'
     ctx.fillText(`Lives: ${lives} `, canvas.width -130, 40)
-
 
     // fish images 
     for (i=0; i<fishArr.length; i++) {
@@ -172,8 +227,8 @@ function draw(){
         }
 
         // collision fish 
-        if (binX + 50 >= fishArr[i].x && binX <= fishArr[i].x + 40){
-            if (binY + 50 >= fishArr[i].y && binY <= fishArr[i].y + 40){
+        if (scubaX + 50 >= fishArr[i].x && scubaX <= fishArr[i].x + 40){
+            if (scubaY + 50 >= fishArr[i].y && scubaY <= fishArr[i].y + 40){
                 fishSound.play()
                 fishArr.splice(i, 1) 
                 lives--
@@ -182,40 +237,39 @@ function draw(){
                 if (lives < 1) {
                     isGameOver = true
                 }
+            }
         }
     }
 
-    }
+    energyBar()
+    scubaMove()
 
-    // move of the bin
-    if (isRight && binX + bin.width < canvas.width) {
-        binX = binX + 5
-    }
-    if (isLeft && binX > 0) {
-        binX = binX - 5
-    }
+    //draw energybar
+    ctx.drawImage(energy, energyX, energyY, 40, 40)
 
-    if (isDown && binY + bin.width < canvas.height) {
-        binY = binY + 5
-    }
-    if (isUp && binY > 0) {
-        binY = binY - 5
-    }
-
-
-
-    
     for (j=0; j<plasticArr.length; j++){
+
         //draw plastic 
         ctx.drawImage(plastic, plasticArr[j].x, plasticArr[j].y, 60, 60)
+
+        // speed of the plastic
+        plasticArr[j].x = plasticArr[j].x - 1
+
+        // let plastic come back again 
+        if (plasticArr[j].x + plastic.width < 0) {
+            plasticArr[j].x = canvas.width
+            plasticArr[j].y = Math.random()*(canvas.height)
+        }
+        
+        
             
-        // colliion plastic 
-        if (plasticArr[j].x < binX + bin.width && plasticArr[j].x + plastic.width > binX
-            && plasticArr[j].y < binY + bin.height && plasticArr[j].y + plastic.height > binY) {
+        // collision plastic 
+        if (plasticArr[j].x < scubaX + scuba.width && plasticArr[j].x + plastic.width > scubaX
+            && plasticArr[j].y < scubaY + scuba.height && plasticArr[j].y + plastic.height > scubaY) {
             score++
             plasticSound.play()
             
-            // increase speed of fish 
+            // increase speed of fish if score is higher
             if (score > 2) {
                 fishSpeed = fishSpeed + 0.5
             }
@@ -226,7 +280,7 @@ function draw(){
                 fishSpeed = fishSpeed + 3
             }
 
-            // mutates the original array. 
+            // mutates the original plastic Array.
             plasticArr.splice(j, 1) 
           
             if (plasticArr.length == 0) {
@@ -235,17 +289,14 @@ function draw(){
         }
     }
 
-
     if (isGameOver) {
         cancelAnimationFrame(intervalId)
         showGameOver()
-
     }
     else {
         intervalId = requestAnimationFrame(draw)
     }
-    
-    }
+}
 
 
 window.addEventListener('load', () => {

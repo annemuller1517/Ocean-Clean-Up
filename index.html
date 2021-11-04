@@ -10,10 +10,25 @@
 </head>
 <body>
     <section class="startPage">
-        <h1>SCUBASOUPAH</h1>
-        <p>Great that you are here to make the fish happy again!</p>
-        <button id="start" class="buttons">Lets play</button>
-        <button id="instructions" class="buttons">Instructions</button>
+        <div class ="startText">
+            <h1 class="rainbow-text">SCUBASOUPAH</h1>
+            <p>Great that you are here to make the fish happy again!</p>
+            <button id="start" class="buttons">Lets play</button>
+            <button id="instructions" class="buttons">Instructions</button>
+            <img id="scubaImg" src="./images/scubaguy.png" alt="Scubaguy image">
+        </div>
+        <div id="background-wrap">
+            <div class="bubble x1"></div>
+            <div class="bubble x2"></div>
+            <div class="bubble x3"></div>
+            <div class="bubble x4"></div>
+            <div class="bubble x5"></div>
+            <div class="bubble x6"></div>
+            <div class="bubble x7"></div>
+            <div class="bubble x8"></div>
+            <div class="bubble x9"></div>
+            <div class="bubble x10"></div>
+        </div>
     </section>
     <section class="instructionPage">
         <h1>Instructions</h1>
@@ -21,15 +36,20 @@
         <button id="startNow" class="buttons">Lets play</button>
     </section>
     <section class="wonPage">
-        <h1>Game Over</h1>
-        <p>Click on the restart button to improve your highscore!
-        </p>
+        <div>
+            <h1>Game Over</h1>
+            <img id="sadFish"src="./images/sadFish-removebg-preview.png" alt="sad fish">
+        </div>
+        <p>Click on <a id="restartGreen" href="">restart</a> to improve your highscore!</p>
         <ul class="highScore">
-            <h1>Your best score: </h1><li id="firstPlace">0</li>
-            <h1>Your second best score:</h1><li id="secondPlace">0</li>
-            <h1>Your third best score:</h1> <li id="thirdPlace">0</li>
+            <li >Your HIGHSCORE: <span id="firstPlace">0</span></li>
+            <li>Your second best score: <span id="secondPlace">0</span></li>
+            <li>Your third best score: <span id="thirdPlace">0</span></li>
         </ul>
-        <button id="restart" class="buttons">RESTART</button>
+        <div id="restartbutton">
+            <button id="restart" class="buttons">RESTART</button>
+        </div>
+        
     </section>
     <canvas id="myCanvas" width=1200 height=700></canvas>
     <script src="index.js"></script>
