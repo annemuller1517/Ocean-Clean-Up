@@ -142,6 +142,8 @@ function showGameOver() {
     lives = 3
     speedScuba = 1
     energy.src = "./images/bar.png"
+    energyX = 500
+    energyY  = 400
 }
 
 function scubaMove() {
@@ -184,6 +186,8 @@ function energyBar() {
         speedScuba = 0
         eat.play()
         energy.src = ""
+        energyX = ""
+        energyY = ""
     }
 }
 
@@ -261,8 +265,6 @@ function draw(){
             plasticArr[j].x = canvas.width
             plasticArr[j].y = Math.random()*(canvas.height)
         }
-        
-        
             
         // collision plastic 
         if (plasticArr[j].x < scubaX + scuba.width && plasticArr[j].x + plastic.width > scubaX
