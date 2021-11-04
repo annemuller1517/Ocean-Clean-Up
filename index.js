@@ -31,7 +31,7 @@ bin.src = './images/scubaguy.png'
 
 
 let scubaLeft = new Image();
-scubaLeft.src = "./Images/scubaleft.png"
+scubaLeft.src = "./Images/Screenshot_2021-11-03_at_16.49.11-removebg-preview.png"
 
 
 let plastic = new Image();
@@ -138,6 +138,8 @@ function draw(){
 
     // background image 
     ctx.drawImage(bg, 0,0, 1500, 800)
+
+    // ctx.drawImage(bin, binX, binY, bin.width, bin.height)
     
     // bin image 
     if (isRight == true || isLeft == false) {
@@ -146,9 +148,10 @@ function draw(){
 
 
     else if (isLeft == true && isRight == false){
+        //deleten 
         ctx.drawImage(scubaLeft, binX, binY, bin.width, bin.height)
     }
-
+    // morgen kijken 
 
 
     
