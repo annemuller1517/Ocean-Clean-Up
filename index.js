@@ -32,19 +32,19 @@ scuba.src = './images/scubaguy.png'
 let energy = new Image();
 energy.src = "./images/bar.png"
 
-
 let scubaLeft = new Image();
 scubaLeft.src = "./images/scubaLeft.png"
-
 
 let plastic = new Image();
 plastic.src = './images/plasticBottle.png'
 
 
+// load all the sounds
 let backgroundMusic = new Audio('./sounds/disney_instrumental_neverland_orchestra_under_the_sea_TZsy_XIByoK-gucZwiP_.mp3')
 let plasticSound = new Audio("./sounds/Plastic-sound.mp3")
 let fishSound = new Audio("./sounds/mixkit-ow-exclamation-of-pain-2204.wav")
 let gameoverSound = new Audio("./sounds/sfx-defeat2.mp3")
+let eat = new Audio("./sounds/mixkit-hungry-man-eating-2252.wav")
 
 // set volume lower 
 backgroundMusic.volume = .1;
@@ -182,6 +182,7 @@ function energyBar() {
     if (energyX < scubaX + scuba.width && energyX + 40 > scubaX
     && energyY < scubaY + scuba.height && energyY + 40 > scubaY) {
         speedScuba = 0
+        eat.play()
         energy.src = ""
     }
 }

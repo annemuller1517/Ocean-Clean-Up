@@ -34,6 +34,20 @@
     z-index: 15;
 }
 
+.instructionPage ul {
+    list-style: none;
+}
+
+.instructions {
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+}
+
+.instructions li {
+    padding-bottom: 20px;
+}
+
 #restart {
     display: flex;
 
@@ -85,6 +99,16 @@ canvas {
       font-size: 40px;
       
   }
+  .instructionPage h1 {
+      font-size: 100px;
+      margin-top: 0px;
+  }
+ 
+  #keyboard {
+    height: 150px;
+    height: 150px;
+    margin-bottom: 40px;
+  }
 
   .startPage h1, .wonPage h1 {
       font-size: 100px;
@@ -132,6 +156,12 @@ canvas {
     margin-top: 0px;
     display: flex;
     justify-content: center;
+}
+
+#containerButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #restartbutton {

@@ -31,9 +31,23 @@
         </div>
     </section>
     <section class="instructionPage">
-        <h1>Instructions</h1>
-        <p>here are the instructions </p>
-        <button id="startNow" class="buttons">Lets play</button>
+        <div>
+            <h1 class="rainbow-text">Instructions</h1>      
+            <div class="instructions">
+                <ul>
+                    <li><u>Goal: </u>Aollect All The Plastic</li>
+                    <li><u>Move:</u> Use The Arrow Keys To Move</li>
+                    <li><u>Avoid:</u> Avoid The Fish</li>
+                    <li><u>Energy:</u> Eat The Energy Bar For More Speed</li>
+                </ul>
+            </div>   
+
+            <img id="keyboard" src="./images/pngfind.com-arrow-marks-png-734882.png" alt="keyboard image">
+            <div id="containerButton">
+                <button id="startNow" class="buttons">Lets play</button>
+            </div>
+            
+        </div>
     </section>
     <section class="wonPage">
         <div>
@@ -42,14 +56,25 @@
         </div>
         <p>Click on <a id="restartGreen" href="">restart</a> to improve your highscore!</p>
         <ul class="highScore">
-            <li >Your HIGHSCORE: <span id="firstPlace">0</span></li>
-            <li>Your second best score: <span id="secondPlace">0</span></li>
-            <li>Your third best score: <span id="thirdPlace">0</span></li>
+            <li >HIGHSCORE: <span id="firstPlace">0</span></li>
+            <li>2ND PLACE: <span id="secondPlace">0</span></li>
+            <li>3RD PLACE: <span id="thirdPlace">0</span></li>
         </ul>
         <div id="restartbutton">
             <button id="restart" class="buttons">RESTART</button>
         </div>
-        
+        <div id="background-wrap">
+            <div class="bubble x1"></div>
+            <div class="bubble x2"></div>
+            <div class="bubble x3"></div>
+            <div class="bubble x4"></div>
+            <div class="bubble x5"></div>
+            <div class="bubble x6"></div>
+            <div class="bubble x7"></div>
+            <div class="bubble x8"></div>
+            <div class="bubble x9"></div>
+            <div class="bubble x10"></div>
+        </div>
     </section>
     <canvas id="myCanvas" width=1200 height=700></canvas>
     <script src="index.js"></script>
